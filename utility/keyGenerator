@@ -1,0 +1,7 @@
+move to the directory where you want to save keys.
+
+1) create private key (:bit)
+openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:4096
+
+2) create public key from private key
+openssl rsa -pubout -in private_key.pem -out public_key.pem

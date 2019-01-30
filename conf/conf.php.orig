@@ -1,0 +1,20 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: alessandro
+ * Date: 04/01/19
+ * Time: 10.42
+ */
+if(!defined('SERVER')){
+
+    define("PROJECT_NAME", "perilNetwork");
+
+    /*LOCALE*/
+    define('SERVER','mysql_57');
+    define('DBUSER','root');
+    define('DBPASSWORD','alessandro'); //dbPassword written in mysql portainer
+    define('DBNAME','crypto'); //dbName
+    define('DBCHARSET','latin1');
+    define('LOCALE', true);
+
+}
