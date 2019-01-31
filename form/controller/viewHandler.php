@@ -19,8 +19,7 @@ function getDatiPagina($request){
 
     $pdo = connettiPdo();
     $user = new User($pdo);
-
-    $result['user'] = $user->findAll(false,User::FETCH_KEYARRAY);
+    $result['user'] = $user->findUser(User::FETCH_KEYARRAY);
 
     return json_encode($result);
 }
@@ -29,8 +28,11 @@ function showData($request){
 
     $result = array();
 
+    $pdo = connettiPdo();
+    $text = User::getTextByIdStatic($pdo, $request->id);
+
     $decrypt = new Decrypt();
-    $decryptResult = $decrypt->decryptData($request->text, $request->key);
+    $decryptResult = $decrypt->decryptData($text, $request->key);
     if($decryptResult){
         $ccData = (explode(";",$decryptResult));
         foreach ($ccData as $c){

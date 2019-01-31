@@ -13,20 +13,21 @@ app.controller('viewController', function($scope, $http) {
         $http.post(handler + '/form/controller/viewHandler.php',
             {'function': 'getDatiPagina'}
         ).then(function (data) {
+            console.log(data.data);
             $scope.user = data.data.user;
         })
     };
 
-    $scope.showCard = function (text, user) {
+    $scope.showCard = function (user) {
         $scope.creditCard = null;
-        $scope.text = text;
-        $scope.userSelected = user;
+        $scope.id = user.id;
+        $scope.userSelected = user.name;
     };
 
     $scope.insertKey = function (key) {
 
         $http.post(handler + '/form/controller/viewHandler.php',
-            {'function': 'showData', 'text': $scope.text, 'key': key}
+            {'function': 'showData', 'id': $scope.id, 'key': key}
         ).then(function (data) {
             $scope.key = '';
             if(data.data.status === 'KO'){

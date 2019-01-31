@@ -37,6 +37,7 @@ app.controller('registrationController', function($scope, $http) {
                     $scope.dataCorrect = false;
                 }
             }
+            console.log('Correct: ' + $scope.dataCorrect);
         }
     );
 
@@ -46,21 +47,24 @@ app.controller('registrationController', function($scope, $http) {
         var mastercardRegEx = /^(?:5[1-5][0-9]{14})$/;
         var amexpRegEx = /^(?:3[47][0-9]{13})$/;
         var cvv3RegEx = /^[0-9]{3}$/;
-        var cvv4RegEx = /^[0-9]{4}$/;
+        var cvv34RegEx = /^[0-9]{3,4}$/;
         var isValid = false;
 
         switch($scope.card.type) {
             case 'American Express':
-                if(amexpRegEx.test($scope.card.number) && cvv4RegEx.test($scope.card.cvv)){
+                console.log('American Express');
+                if(amexpRegEx.test($scope.card.number) && cvv34RegEx.test($scope.card.cvv)){
                     isValid = true;
                 }
                 break;
             case 'MasterCard':
+                console.log('MasterCard');
                 if(mastercardRegEx.test($scope.card.number) && cvv3RegEx.test($scope.card.cvv)){
                     isValid = true;
                 }
                 break;
             case 'Visa':
+                console.log('Visa');
                 if(visaRegEx.test($scope.card.number) && cvv3RegEx.test($scope.card.cvv)){
                     isValid = true;
                 }
@@ -68,6 +72,7 @@ app.controller('registrationController', function($scope, $http) {
             default:
                 isValid = false
         }
+        console.log('Number + cvv: ' + isValid);
         return isValid;
     };
 
@@ -83,6 +88,7 @@ app.controller('registrationController', function($scope, $http) {
                 }
             }
         }
+        console.log('Date: ' + isValid);
         return isValid;
     };
 
