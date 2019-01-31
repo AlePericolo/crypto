@@ -11,6 +11,7 @@ require_once '../../src/lib/pdo.php';
 require_once '../../src/lib/functions.php';
 
 require_once '../../src/model/User.php';
+require_once '../../src/utility/Crypt.php';
 
 function getDatiPagina($request){
 
@@ -21,7 +22,7 @@ function getDatiPagina($request){
 
     $result['user'] = $user->getEmptyKeyArray();
     $result['card'] = array('type'=>'','number'=>'','cvv'=>'','expirationMonth'=>'','expirationYear'=>'');
-    $result['cardType'] = ['American Express', 'Carte Blanche', 'Discover', 'Diners Club', 'enRoute', 'JCB', 'MasterCard', 'Solo', 'Switch', 'Visa', 'Laser'];
+    $result['cardType'] = ['American Express', 'MasterCard', 'Visa'];
     $result['months'] = ['01','02','03','04','05','06','07','08','09','10','11','12'];
     $yars = [];
     for($i = date("Y"); $i <= (date("Y") + 10); $i ++){
@@ -33,7 +34,7 @@ function getDatiPagina($request){
 }
 
 
-function salvaDati($request){
+function save($request){
 
     $result = array();
 
@@ -41,12 +42,14 @@ function salvaDati($request){
 
     try{
         $pdo->beginTransaction();
-        $post = new Post($pdo);
-        $post->findByPk($request->post->id);
-        $post->setTesto($request->post->testo);
-        $post->saveOrUpdate();
+        $user = new User($pdo);
+        $user->setName($request->user->name);
+        $crypt = new Crypt();
+        $user->setText($crypt->cryptData($request->user->text));
+        $user->saveOrUpdate();
         $pdo->commit();
         $result['response'] = 'OK';
+        $result['message'] = 'Data saved successfully';
     }catch (PDOException $e){
         $pdo->rollBack();
         $result['response'] = 'KO';

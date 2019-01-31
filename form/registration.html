@@ -9,14 +9,14 @@
 </head>
 
 <body ng-app="cryptoApp" ng-controller="registrationController" data-ng-init="init()">
-
+    <button type="button" class="btn btn-light float-right mr-5" ng-click="goToViewData()">View data</button>
     <div class="container mt-3">
         <h3>Registration form:</h3>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Username</span>
             </div>
-            <input type="text" class="form-control" ng-model="user.name" placeholder="Username" id="usr" name="username">
+            <input type="text" class="form-control" ng-model="user.name" placeholder="Username">
         </div>
         <hr>
         <h5>Credit card:</h5>
@@ -30,13 +30,13 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">&nbsp;Number&nbsp;</span>
             </div>
-            <input type="number" class="form-control" ng-model="card.number">
+            <input type="text" class="form-control" ng-model="card.number" ng-disabled="!card.type" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">&nbsp;&nbsp;&nbsp;&nbsp;CVV&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
-            <input type="number" class="form-control" ng-model="card.cvv">
+            <input type="text" class="form-control" ng-model="card.cvv" ng-disabled="!card.type" onkeyup="this.value=this.value.replace(/[^\d]/,'')">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -49,10 +49,8 @@
             </div>
             <select class="custom-select" ng-options="y for y in years" ng-model="card.expirationYear"></select>
         </div>
-        <!--<button class="btn btn-success" ng-click="checkCreditCardFormat()" ng-disabled="!dataCorrect">Save</button>-->
-        <button class="btn btn-success" ng-click="checkCreditCardFormat()">Save</button>
+        <button class="btn btn-success" ng-click="save()" ng-disabled="!dataCorrect">Save</button>
     </div>
-
 </body>
 
 <footer>

@@ -2,44 +2,35 @@ var app = angular.module('cryptoApp', []);
 
 app.controller('registrationController', function($scope, $http) {
 
-    var handler = window.location.href.split("/form")[0];
+    var handler = window.location.href.split('/form')[0];
 
-    $scope.caricamentoCompletato = false;
     $scope.dataCorrect = false;
 
     $scope.init = function(){
         $scope.caricaDati();
     };
 
-    /*========================================== CARICO DATI PAGINA ==================================================*/
-
     $scope.caricaDati = function(){
 
         $http.post(handler + '/form/controller/registrationHandler.php',
             {'function': 'getDatiPagina'}
         ).then(function (data) {
-            console.log(data.data);
             $scope.user = data.data.user;
             $scope.card = data.data.card;
             $scope.cardType = data.data.cardType;
             $scope.months = data.data.months;
             $scope.years = data.data.years;
-
-        }).then(function () {
-            $scope.caricamentoCompletato = true;
-        });
+        })
     };
 
     $scope.$watchGroup(['user.name', 'card.type', 'card.number', 'card.cvv', 'card.expirationMonth', 'card.expirationYear'],
         function (){
-            if ($scope.user && $scope.card) {
+            if ($scope.card) {
                 if(
                     $scope.user.name !== '' &&
                     $scope.card.type !== '' &&
-                    $scope.card.number !== '' &&
-                    $scope.card.cvv !== '' &&
-                    $scope.card.expirationMonth !== '' &&
-                    $scope.card.expirationYear !== ''
+                    $scope.checkCreditCard() &&
+                    $scope.checkDate()
                 ){
                     $scope.dataCorrect = true;
                 }else{
@@ -49,26 +40,72 @@ app.controller('registrationController', function($scope, $http) {
         }
     );
 
-    $scope.checkCreditCardFormat = function () {
+    $scope.checkCreditCard = function () {
 
+        var visaRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+        var mastercardRegEx = /^(?:5[1-5][0-9]{14})$/;
+        var amexpRegEx = /^(?:3[47][0-9]{13})$/;
+        var cvv3RegEx = /^[0-9]{3}$/;
+        var cvv4RegEx = /^[0-9]{4}$/;
+        var isValid = false;
 
-        //var number = $scope.card.number;
-        //var type = $scope.card.type;
-
-        var number = 340000000000009;
-        var type = 'American Express';
-
-        console.log(number);
-        console.log(type);
-
-        if (checkCreditCard(number, type)) {
-            alert("Credit card has a valid format")
-        } else {
-            console.log(ccErrors);
-            alert(ccErrors[ccErrorNo])
+        switch($scope.card.type) {
+            case 'American Express':
+                if(amexpRegEx.test($scope.card.number) && cvv4RegEx.test($scope.card.cvv)){
+                    isValid = true;
+                }
+                break;
+            case 'MasterCard':
+                if(mastercardRegEx.test($scope.card.number) && cvv3RegEx.test($scope.card.cvv)){
+                    isValid = true;
+                }
+                break;
+            case 'Visa':
+                if(visaRegEx.test($scope.card.number) && cvv3RegEx.test($scope.card.cvv)){
+                    isValid = true;
+                }
+                break;
+            default:
+                isValid = false
         }
+        return isValid;
+    };
 
-    }
+    $scope.checkDate = function () {
 
+        var isValid = false;
+        if($scope.card.expirationMonth !== '' && $scope.card.expirationYear !== ''){
+            if ($scope.card.expirationYear > (new Date()).getFullYear()){
+                isValid = true;
+            }else{
+                if($scope.card.expirationMonth >= (new Date()).getMonth() + 1){
+                    isValid = true;
+                }
+            }
+        }
+        return isValid;
+    };
+
+
+    $scope.save = function () {
+        $scope.user.text = 'card_' + $scope.card.type + ';number_' + $scope.card.number + ';cvv_' + $scope.card.cvv + ';expiration_' + $scope.card.expirationMonth + '/' + $scope.card.expirationYear;
+        console.log($scope.user);
+
+        $http.post(handler + '/form/controller/registrationHandler.php',
+            {'function': 'save', 'user': $scope.user}
+        ).then(function (data) {
+            if(data.data.response === 'OK'){
+                swal(data.data.message, '', 'success');
+            }else{
+                swal(data.data.message, '', 'error');
+            }
+        }).then(function () {
+            window.location.reload();
+        })
+    };
+
+    $scope.goToViewData = function () {
+        window.location.href = handler + '/form/view.html';
+    };
 
 });

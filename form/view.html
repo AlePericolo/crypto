@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>View</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+
+<body ng-app="cryptoApp" ng-controller="viewController" data-ng-init="init()">
+    <button type="button" class="btn btn-light float-right mr-5" ng-click="goToRegistrationForm()">Registration form</button>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-7">
+                <h3>User list:</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Card</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="u in user">
+                        <td>{{$index + 1}}</td>
+                        <td>{{u.name}}</td>
+                        <td> <button type="button" class="btn btn-secondary" ng-click="showCard(u.text, u.name)" data-toggle="modal" data-target="#ccModal"> <i class="fas fa-credit-card"></i> </button> </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-5" ng-if="creditCard">
+                <div class="card">
+                    <div class="card-header text-center"> <h3>Credit card</h3> </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="w-25 text-right"> <b>User:</b> </div>
+                                <div class="w-75 pl-5"> {{userSelected}} </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="w-25 text-right"> <b>Type:</b> </div>
+                                <div class="w-75 pl-5"> {{creditCard.card}} </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="w-25 text-right"> <b>Number:</b> </div>
+                                <div class="w-75 pl-5"> {{creditCard.number}} </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="w-25 text-right"> <b>CVV:</b> </div>
+                                <div class="w-75 pl-5"> {{creditCard.cvv}} </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="w-25 text-right"> <b>Expiration:</b> </div>
+                                <div class="w-75 pl-5"> {{creditCard.expiration}} </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="modal" id="ccModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Insert key:</h2>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea class="form-control" ng-model="key" rows="10"></textarea>
+                        <button class="btn btn-secondary" ng-click="insertKey(key)" ng-disabled="!key" data-dismiss="modal"> show data <i class="fas fa-eye"></i> </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger float-right" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<footer>
+    <!--bootstrap js-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <!--angularJS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+    <!--swal-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.js"></script>
+    <!--credit card-->
+    <script src="https://www.braemoor.co.uk/software/_private/creditcard.js"></script>
+    <!--controller-->
+    <script src="controller/viewController.js" type="text/javascript"></script>
+</footer>
+
+</html>

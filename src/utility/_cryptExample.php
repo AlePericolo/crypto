@@ -36,7 +36,7 @@ fclose($myfilePublic);
 
 echo "Private Key:<BR>$privatekey<br><br>Public Key:<BR>$publickey<BR><BR>";
 
-$cleartext = '1;1234567890123456;123;12/12';
+$cleartext = '1234567890123456';
 
 echo "Clear text:<br>$cleartext<BR><BR>";
 
@@ -48,7 +48,7 @@ $baseCrypted = base64_encode($crypttext);
 
 echo "$baseCrypted"."<BR><BR>";
 
-echo "lunghezza ".strlen($baseCrypted)."<BR><BR>";
+//echo "lunghezza ".strlen($baseCrypted)."<BR><BR>";
 
 $baseDecrypted = base64_decode($baseCrypted);
 
