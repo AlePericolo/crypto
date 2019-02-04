@@ -55,7 +55,6 @@ function save($request){
         $result['response'] = 'KO';
         $result['message'] = $e->getMessage();
     }
-
     return json_encode($result);
 }
 

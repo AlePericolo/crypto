@@ -13,7 +13,7 @@ app.controller('viewController', function($scope, $http) {
         $http.post(handler + '/form/controller/viewHandler.php',
             {'function': 'getDatiPagina'}
         ).then(function (data) {
-            console.log(data.data);
+            //console.log(data.data);
             $scope.user = data.data.user;
         })
     };

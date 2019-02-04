@@ -52,19 +52,19 @@ app.controller('registrationController', function($scope, $http) {
 
         switch($scope.card.type) {
             case 'American Express':
-                console.log('American Express');
+                //console.log('American Express');
                 if(amexpRegEx.test($scope.card.number) && cvv34RegEx.test($scope.card.cvv)){
                     isValid = true;
                 }
                 break;
             case 'MasterCard':
-                console.log('MasterCard');
+                //console.log('MasterCard');
                 if(mastercardRegEx.test($scope.card.number) && cvv3RegEx.test($scope.card.cvv)){
                     isValid = true;
                 }
                 break;
             case 'Visa':
-                console.log('Visa');
+                //console.log('Visa');
                 if(visaRegEx.test($scope.card.number) && cvv3RegEx.test($scope.card.cvv)){
                     isValid = true;
                 }
@@ -72,7 +72,7 @@ app.controller('registrationController', function($scope, $http) {
             default:
                 isValid = false
         }
-        console.log('Number + cvv: ' + isValid);
+        //console.log('Number + cvv: ' + isValid);
         return isValid;
     };
 
@@ -88,7 +88,7 @@ app.controller('registrationController', function($scope, $http) {
                 }
             }
         }
-        console.log('Date: ' + isValid);
+        //console.log('Date: ' + isValid);
         return isValid;
     };
 
