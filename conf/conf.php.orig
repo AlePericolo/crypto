@@ -7,14 +7,11 @@
  */
 if(!defined('SERVER')){
 
-    define("PROJECT_NAME", "perilNetwork");
-
     /*LOCALE*/
-    define('SERVER','mysql_57');
-    define('DBUSER','root');
-    define('DBPASSWORD','alessandro'); //dbPassword written in mysql portainer
-    define('DBNAME','crypto'); //dbName
+    define('SERVER','');
+    define('DBUSER','');
+    define('DBPASSWORD',''); //dbPassword written in mysql portainer
+    define('DBNAME',''); //dbName
     define('DBCHARSET','latin1');
     define('LOCALE', true);
-
 }
