@@ -11,7 +11,7 @@ require_once '../../src/lib/pdo.php';
 require_once '../../src/lib/functions.php';
 
 require_once '../../src/model/User.php';
-require_once '../../src/utility/Decrypt.php';
+require_once '../../src/model/Decrypt.php';
 
 function getDatiPagina($request){
 
