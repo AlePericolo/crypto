@@ -22,9 +22,15 @@
         <h5>Credit card:</h5>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
+                <label class="input-group-text">&nbsp;&nbsp;Holder&nbsp;&nbsp;</label>
+            </div>
+            <input type="text" class="form-control" ng-model="card.holder" placeholder="Account holder" onkeyup="this.value=this.value.replace(/[0-9]/g,'')">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
                 <label class="input-group-text">&nbsp;&nbsp;&nbsp;Type&nbsp;&nbsp;&nbsp;&nbsp;</label>
             </div>
-            <select class="custom-select" ng-options="ct for ct in cardType" ng-model="card.type"></select>
+            <select class="custom-select" ng-options="ct for ct in cardType" ng-model="card.type" ng-disabled="!card.holder"></select>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">

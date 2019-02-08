@@ -21,7 +21,7 @@ function getDatiPagina($request){
     $user = new User($pdo);
 
     $result['user'] = $user->getEmptyKeyArray();
-    $result['card'] = array('type'=>'','number'=>'','cvv'=>'','expirationMonth'=>'','expirationYear'=>'');
+    $result['card'] = array('holder'=>'','type'=>'','number'=>'','cvv'=>'','expirationMonth'=>'','expirationYear'=>'');
     $result['cardType'] = ['American Express', 'MasterCard', 'Visa'];
     $result['months'] = ['01','02','03','04','05','06','07','08','09','10','11','12'];
     $yars = [];

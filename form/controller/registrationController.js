@@ -23,11 +23,12 @@ app.controller('registrationController', function($scope, $http) {
         })
     };
 
-    $scope.$watchGroup(['user.name', 'card.type', 'card.number', 'card.cvv', 'card.expirationMonth', 'card.expirationYear'],
+    $scope.$watchGroup(['user.name', 'card.holder', 'card.type', 'card.number', 'card.cvv', 'card.expirationMonth', 'card.expirationYear'],
         function (){
             if ($scope.card) {
                 if(
                     $scope.user.name !== '' &&
+                    $scope.card.holder !== '' &&
                     $scope.card.type !== '' &&
                     $scope.checkCreditCard() &&
                     $scope.checkDate()
@@ -37,7 +38,7 @@ app.controller('registrationController', function($scope, $http) {
                     $scope.dataCorrect = false;
                 }
             }
-            console.log('Correct: ' + $scope.dataCorrect);
+            //console.log('Correct: ' + $scope.dataCorrect);
         }
     );
 
@@ -94,7 +95,7 @@ app.controller('registrationController', function($scope, $http) {
 
 
     $scope.save = function () {
-        $scope.user.text = 'card_' + $scope.card.type + ';number_' + $scope.card.number + ';cvv_' + $scope.card.cvv + ';expiration_' + $scope.card.expirationMonth + '/' + $scope.card.expirationYear;
+        $scope.user.text = 'holder_' + $scope.card.holder + ';card_' + $scope.card.type + ';number_' + $scope.card.number + ';cvv_' + $scope.card.cvv + ';expiration_' + $scope.card.expirationMonth + '/' + $scope.card.expirationYear;
         console.log($scope.user);
 
         $http.post(handler + '/form/controller/registrationHandler.php',
